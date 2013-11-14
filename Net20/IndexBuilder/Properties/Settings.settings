@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="IndexBuilder.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BaseIndexUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:9200/</Value>
+    </Setting>
+    <Setting Name="DescriptionIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">descriptions</Value>
+    </Setting>
+    <Setting Name="RelationshipIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">relationships</Value>
+    </Setting>
+    <Setting Name="ClinicalFindingIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">clinicalfinding</Value>
+    </Setting>
+    <Setting Name="FindingSiteIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">findingsite</Value>
+    </Setting>
+    <Setting Name="Entity" Type="System.String" Scope="User">
+      <Value Profile="(Default)">concept</Value>
+    </Setting>
+    <Setting Name="DescriptionsFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\data\descriptions.txt</Value>
+    </Setting>
+    <Setting Name="RelationshipsFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\data\relationships.txt</Value>
+    </Setting>
+    <Setting Name="DelimiterCode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">9</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
