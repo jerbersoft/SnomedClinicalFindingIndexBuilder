@@ -25,7 +25,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:9200/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:9200")]
         public string BaseIndexUrl {
             get {
                 return ((string)(this["BaseIndexUrl"]));

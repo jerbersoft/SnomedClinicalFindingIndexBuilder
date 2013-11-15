@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="BaseIndexUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://localhost:9200/</Value>
+      <Value Profile="(Default)">http://localhost:9200</Value>
     </Setting>
     <Setting Name="DescriptionIndexName" Type="System.String" Scope="User">
       <Value Profile="(Default)">descriptions</Value>

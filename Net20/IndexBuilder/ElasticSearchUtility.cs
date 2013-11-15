@@ -12,6 +12,8 @@ namespace IndexBuilder
     {
         public static List<string> GetChildren(string url, string relationshipUrl, string[] ids)
         {
+            relationshipUrl = relationshipUrl + "/_search";
+
             int retrieved = 0;
             var childrenIds = new List<string>();
 
@@ -45,7 +47,7 @@ namespace IndexBuilder
 
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
-                        Console.WriteLine(string.Format("Deserializing JSON response."));
+                        //Console.WriteLine(string.Format("Deserializing JSON response."));
 
                         var jsonResult = reader.ReadToEnd();
                         result = JsonConvert.DeserializeObject<Result>(jsonResult);
@@ -66,11 +68,14 @@ namespace IndexBuilder
                 Console.WriteLine(ex.Message);
             }
 
+
+            request = null;
             return childrenIds;
         }
 
         public static string GetDescription(string descriptionUrl, string conceptId)
         {
+            descriptionUrl = descriptionUrl + "/_search";
             var description = string.Empty;
 
             // get description
@@ -186,6 +191,100 @@ namespace IndexBuilder
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public static void CreateIndex(string indexName, string entity, string baseUrl, string[] properties)
+        {
+            // create index
+            var createRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/{1}", baseUrl, indexName));
+            createRequest.Method = "PUT";
+            createRequest.ContentType = "application/x-www-form-urlencoded";
+            createRequest.Accept = "application/json";
+
+            StringBuilder propertyBuilder = new StringBuilder();
+            for (var i = 0; i < properties.Length; i++)
+            {
+                propertyBuilder.Append(string.Format("\"{0}\" : {{ \"type\" : \"string\" }}", properties[i]));
+                if ((i + 1) < properties.Length)
+                {
+                    propertyBuilder.Append(",");
+                }
+            }
+
+            string createString = "{ \"mappings\" : { \"" + entity + "\" : { \"properties\" : { " + propertyBuilder.ToString() + " }}}} ";
+            byte[] createStringBytes = Encoding.UTF8.GetBytes(createString);
+            createRequest.ContentLength = createStringBytes.Length;
+
+            using (var requestStream = createRequest.GetRequestStream())
+            {
+                requestStream.Write(createStringBytes, 0, createStringBytes.Length);
+            }
+
+            try
+            {
+                using (var createResponse = createRequest.GetResponse())
+                {
+                    using (var reader = new StreamReader(createResponse.GetResponseStream()))
+                    {
+                        string responseText = reader.ReadToEnd();
+                        // TODO : check if response is ok
+                    }
+                }
+            }
+            catch (WebException webEx)
+            {
+                Console.WriteLine(webEx.Message);
+                throw webEx;
+            }
+        }
+
+
+        public static void DeleteIndex(string indexName, string baseUrl)
+        {
+            // delete index
+            var deleteRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/{1}", baseUrl, indexName));
+            deleteRequest.Method = "DELETE";
+            deleteRequest.ContentType = "application/x-www-form-urlencoded";
+            deleteRequest.Accept = "application/json";
+
+
+            using (var requestStream = deleteRequest.GetRequestStream())
+            {
+                byte[] dataBytes = Encoding.UTF8.GetBytes("");
+                requestStream.Write(dataBytes, 0, dataBytes.Length);
+            }
+
+            try
+            {
+                using (var response = deleteRequest.GetResponse())
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        string text = reader.ReadToEnd();
+                    }
+                }
+            }
+            catch (WebException webEx)
+            {
+                Console.WriteLine(webEx.Message);
+                throw webEx;
+            }
+        }
+
+        public static void WriteToService()
+        {
+
+        }
+
+        public enum AllowableValuesEnum
+        {
+            None = 0,
+            ThisCodeAndDescendants = 1,                                     // <<
+            DescendantsOnly = 2,                                            // <
+            DescendantsOnlyExceptForSupercategoryGroupers = 3,              // <=
+            ThisCodeOnly = 4,                                               // ==
+            DescendantsOnlyWhenQualifyingRelationship = 5,                  // < Q
+            DescendantsOnlyAndOnlyAllowedInQualifyingRelationship = 6       // < Q Only
         }
     }
 }
