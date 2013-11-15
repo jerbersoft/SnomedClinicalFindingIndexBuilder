@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net35", "Net35", "{4A78EC7D-EFD9-4453-B38C-5015FBE98596}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndexBuilder", "Net20\IndexBuilder\IndexBuilder.csproj", "{53765310-2ED8-4686-BABD-0442F9D32558}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndexBuilder", "Net35\IndexBuilder\IndexBuilder.csproj", "{53765310-2ED8-4686-BABD-0442F9D32558}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
