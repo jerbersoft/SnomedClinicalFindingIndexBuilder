@@ -29,5 +29,50 @@
     <Setting Name="DelimiterCode" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9</Value>
     </Setting>
+    <Setting Name="AssociatedMorphologyIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">associatedmorphology</Value>
+    </Setting>
+    <Setting Name="AssociatedWithIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">associatedwith</Value>
+    </Setting>
+    <Setting Name="CausativeAgentIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">causativeagent</Value>
+    </Setting>
+    <Setting Name="DueToIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dueto</Value>
+    </Setting>
+    <Setting Name="AfterIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">after</Value>
+    </Setting>
+    <Setting Name="SeverityIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">severity</Value>
+    </Setting>
+    <Setting Name="ClinicalCourseIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">clinicalcourse</Value>
+    </Setting>
+    <Setting Name="EpisodicityIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">episodicity</Value>
+    </Setting>
+    <Setting Name="InterpretsIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">interprets</Value>
+    </Setting>
+    <Setting Name="HasInterpritationIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">hasinterpretation</Value>
+    </Setting>
+    <Setting Name="PathologicalProcessIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pathologicalprocess</Value>
+    </Setting>
+    <Setting Name="OccurenceIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">occurence</Value>
+    </Setting>
+    <Setting Name="FindingMethodIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">findingmethod</Value>
+    </Setting>
+    <Setting Name="FindingInformerIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">findinginformer</Value>
+    </Setting>
+    <Setting Name="HasDefinitionalManifestationIndexName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">hasdefinitionalmanifestation</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

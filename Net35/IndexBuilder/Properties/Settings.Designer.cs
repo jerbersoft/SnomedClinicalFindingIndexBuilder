@@ -130,5 +130,185 @@ namespace IndexBuilder.Properties {
                 this["DelimiterCode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("associatedmorphology")]
+        public string AssociatedMorphologyIndexName {
+            get {
+                return ((string)(this["AssociatedMorphologyIndexName"]));
+            }
+            set {
+                this["AssociatedMorphologyIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("associatedwith")]
+        public string AssociatedWithIndexName {
+            get {
+                return ((string)(this["AssociatedWithIndexName"]));
+            }
+            set {
+                this["AssociatedWithIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("causativeagent")]
+        public string CausativeAgentIndexName {
+            get {
+                return ((string)(this["CausativeAgentIndexName"]));
+            }
+            set {
+                this["CausativeAgentIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("dueto")]
+        public string DueToIndexName {
+            get {
+                return ((string)(this["DueToIndexName"]));
+            }
+            set {
+                this["DueToIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("after")]
+        public string AfterIndexName {
+            get {
+                return ((string)(this["AfterIndexName"]));
+            }
+            set {
+                this["AfterIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("severity")]
+        public string SeverityIndexName {
+            get {
+                return ((string)(this["SeverityIndexName"]));
+            }
+            set {
+                this["SeverityIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("clinicalcourse")]
+        public string ClinicalCourseIndexName {
+            get {
+                return ((string)(this["ClinicalCourseIndexName"]));
+            }
+            set {
+                this["ClinicalCourseIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("episodicity")]
+        public string EpisodicityIndexName {
+            get {
+                return ((string)(this["EpisodicityIndexName"]));
+            }
+            set {
+                this["EpisodicityIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("interprets")]
+        public string InterpretsIndexName {
+            get {
+                return ((string)(this["InterpretsIndexName"]));
+            }
+            set {
+                this["InterpretsIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("hasinterpretation")]
+        public string HasInterpritationIndexName {
+            get {
+                return ((string)(this["HasInterpritationIndexName"]));
+            }
+            set {
+                this["HasInterpritationIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("pathologicalprocess")]
+        public string PathologicalProcessIndexName {
+            get {
+                return ((string)(this["PathologicalProcessIndexName"]));
+            }
+            set {
+                this["PathologicalProcessIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("occurence")]
+        public string OccurenceIndexName {
+            get {
+                return ((string)(this["OccurenceIndexName"]));
+            }
+            set {
+                this["OccurenceIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("findingmethod")]
+        public string FindingMethodIndexName {
+            get {
+                return ((string)(this["FindingMethodIndexName"]));
+            }
+            set {
+                this["FindingMethodIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("findinginformer")]
+        public string FindingInformerIndexName {
+            get {
+                return ((string)(this["FindingInformerIndexName"]));
+            }
+            set {
+                this["FindingInformerIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("hasdefinitionalmanifestation")]
+        public string HasDefinitionalManifestationIndexName {
+            get {
+                return ((string)(this["HasDefinitionalManifestationIndexName"]));
+            }
+            set {
+                this["HasDefinitionalManifestationIndexName"] = value;
+            }
+        }
     }
 }

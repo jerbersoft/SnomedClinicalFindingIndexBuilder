@@ -20,6 +20,21 @@ namespace IndexBuilder
             string relationshipIndexName = Settings.Default.RelationshipIndexName;
             string clinicalFindingsIndexName = Settings.Default.ClinicalFindingIndexName;
             string findingSiteIndexName = Settings.Default.FindingSiteIndexName;
+            string associatedMorphologyIndexName = Settings.Default.AssociatedMorphologyIndexName;
+            string associatedWithIndexName = Settings.Default.AssociatedWithIndexName;
+            string causativeAgentIndexName = Settings.Default.CausativeAgentIndexName;
+            string dueToIndexName = Settings.Default.DueToIndexName;
+            string afterIndexName = Settings.Default.AfterIndexName;
+            string severityIndexName = Settings.Default.SeverityIndexName;
+            string clinicalCourseIndexName = Settings.Default.ClinicalCourseIndexName;
+            string episodicityIndexName = Settings.Default.EpisodicityIndexName;
+            string interpretsIndexName = Settings.Default.InterpretsIndexName;
+            string hasInterpretationIndexName = Settings.Default.HasInterpritationIndexName;
+            string pathologicalProcessIndexName = Settings.Default.PathologicalProcessIndexName;
+            string hasDefinitionalManifestationIndexName = Settings.Default.HasDefinitionalManifestationIndexName;
+            string occurenceIndexName = Settings.Default.OccurenceIndexName;
+            string findingMethodIndexName = Settings.Default.FindingMethodIndexName;
+            string findingInformerIndexName = Settings.Default.FindingInformerIndexName;
             string entity = Settings.Default.Entity;
             int delimiterCode = Settings.Default.DelimiterCode;
 
@@ -35,10 +50,33 @@ namespace IndexBuilder
             // build the relationships index
             //BuildIndexFromFile(relationshipIndexName, entity, baseUrl, relationshipsFilePath, delimiterCode);
 
-            // build clinical findings index
             string descriptionsIndexUrl = baseUrl + "/" + descriptionIndexName + "/" + entity;
             string relationshipsIndexUrl = baseUrl + "/" + relationshipIndexName + "/" + entity;
-            BuildIndexFromIndex(clinicalFindingsIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, "404684003",AllowableValuesEnum.ThisCodeAndDescendants);
+
+            // build attribute indices
+            // for the << specs
+            Console.WriteLine("Process of data for spec with (<<)");
+            //BuildIndexFromIndex(clinicalFindingsIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003" },AllowableValuesEnum.ThisCodeAndDescendants);
+            //BuildIndexFromIndex(findingSiteIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "442083009" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(associatedMorphologyIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "442083009" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(associatedWithIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003", "71388002", "272379006", "410607006", "105590001", "260787004", "78621006" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(causativeAgentIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "410607006", "105590001", "260787004", "78621006" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(dueToIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(afterIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003", "71388002" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(interpretsIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "363787002", "108252007", "386053000" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(hasInterpretationIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "260245000" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(pathologicalProcessIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "441862004" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(hasDefinitionalManifestationIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(occurenceIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "282032007" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            BuildIndexFromIndex(findingInformerIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "420158005", "419358007" }, AllowableValuesEnum.ThisCodeAndDescendants);
+
+            // this code only ==
+            Console.WriteLine("Process of data for spec with (==)");
+            BuildIndexFromIndex(associatedWithIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "138875005" }, AllowableValuesEnum.ThisCodeOnly);
+            BuildIndexFromIndex(causativeAgentIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "138875005" }, AllowableValuesEnum.ThisCodeOnly);
+            BuildIndexFromIndex(pathologicalProcessIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "263680009" }, AllowableValuesEnum.ThisCodeOnly);
+
+
 
             mainWatch.Stop();
             Console.WriteLine("Index builder process completed successfully.");
@@ -84,7 +122,7 @@ namespace IndexBuilder
             Console.WriteLine(string.Format("Index build time: {0}:{1}:{2}", indexWatch.Elapsed.Hours, indexWatch.Elapsed.Minutes, indexWatch.Elapsed.Seconds));
         }
 
-        public static void BuildIndexFromIndex(string indexName, string entity, string baseUrl, string descriptionIndexUrl, string relationshipsIndexUrl, string conceptId, AllowableValuesEnum allowedValues)
+        public static void BuildIndexFromIndex(string indexName, string entity, string baseUrl, string descriptionIndexUrl, string relationshipsIndexUrl, string[] conceptIds, AllowableValuesEnum allowedValues)
         {
             Stopwatch indexWatch = new Stopwatch();
             indexWatch.Start();
@@ -109,7 +147,10 @@ namespace IndexBuilder
 
             // add data
             Console.WriteLine(string.Format("Will now add data to index \"{0}\"", indexName));
-            AddIndexDataFromIndex(baseUrl, indexName, entity, descriptionIndexUrl, relationshipsIndexUrl, conceptId, allowedValues);
+            foreach (var conceptId in conceptIds)
+            {
+                AddIndexDataFromIndex(baseUrl, indexName, entity, descriptionIndexUrl, relationshipsIndexUrl, conceptId, allowedValues);
+            }
 
             indexWatch.Stop();
             Console.WriteLine(string.Format("Finished building index \"{0}\"", indexName));
@@ -127,7 +168,7 @@ namespace IndexBuilder
             int count = 1;
             int level = 1;
 
-            Console.WriteLine("Starting level: " + level.ToString());
+            Console.WriteLine("Starting index data processing: " + level.ToString());
             Stopwatch mainWatch = new Stopwatch();
             mainWatch.Start();
 
@@ -135,45 +176,50 @@ namespace IndexBuilder
             {
                 string description = ElasticSearchUtility.GetDescription(descriptionsIndexUrl, conceptId);
                 ElasticSearchUtility.WriteToIndex(indexUrl, conceptId, description, total);
-                total++;
             }
 
-            parentIds.Add(conceptId);
-            while (parentIds.Count > 0)
+            if (allowedValues != AllowableValuesEnum.ThisCodeOnly)
             {
-                Stopwatch levelWatch = new Stopwatch();
-                levelWatch.Start();
-
-                Console.WriteLine(string.Format("\n\nStarted level {0}", level));
-
-                count = 1;
-                childrenIds = ElasticSearchUtility.GetChildren(indexUrl, relationshipsIndexUrl, parentIds.ToArray());
-                foreach (var child in childrenIds)
-                {
-                    var description = ElasticSearchUtility.GetDescription(descriptionsIndexUrl, child);
-                    ElasticSearchUtility.WriteToIndex(indexUrl, child, description, total);
+                if (allowedValues == AllowableValuesEnum.ThisCodeAndDescendants)
                     total++;
-                    count++;
+
+                parentIds.Add(conceptId);
+                while (parentIds.Count > 0)
+                {
+                    Stopwatch levelWatch = new Stopwatch();
+                    levelWatch.Start();
+
+                    Console.WriteLine(string.Format("\n\nStarted level {0}", level));
+
+                    count = 1;
+                    childrenIds = ElasticSearchUtility.GetChildren(indexUrl, relationshipsIndexUrl, parentIds.ToArray());
+                    foreach (var child in childrenIds)
+                    {
+                        var description = ElasticSearchUtility.GetDescription(descriptionsIndexUrl, child);
+                        ElasticSearchUtility.WriteToIndex(indexUrl, child, description, total);
+                        total++;
+                        count++;
+                    }
+                    string[] ids = new string[childrenIds.Count];
+                    childrenIds.CopyTo(ids, 0);
+                    parentIds.Clear();
+                    parentIds = ids.ToList();
+
+                    //Console.WriteLine(string.Format("Children retrieved: {0}", retrieved));
+                    Console.WriteLine(string.Format("Children added: {0}", count - 1));
+                    //Console.WriteLine(string.Format("Children with duplicates: {0}", duplicates));
+
+
+                    Console.WriteLine(string.Format("Total children added so far: {0}", total - 1));
+                    Console.WriteLine(string.Format("Level process complete: {0}| In {1}:{2}:{3}.", level, levelWatch.Elapsed.Hours, levelWatch.Elapsed.Minutes, levelWatch.Elapsed.Seconds));
+
+                    level++;
                 }
-                string[] ids = new string[childrenIds.Count];
-                childrenIds.CopyTo(ids, 0);
-                parentIds.Clear();
-                parentIds = ids.ToList();
-
-                //Console.WriteLine(string.Format("Children retrieved: {0}", retrieved));
-                Console.WriteLine(string.Format("Children added: {0}", count));
-                //Console.WriteLine(string.Format("Children with duplicates: {0}", duplicates));
-
-
-                Console.WriteLine(string.Format("Total children added so far: {0}", total));
-                Console.WriteLine(string.Format("Level process complete: {0}| In {1}:{2}:{3}.", level, levelWatch.Elapsed.Hours, levelWatch.Elapsed.Minutes, levelWatch.Elapsed.Seconds));
-
-                level++;
             }
 
             mainWatch.Stop();
 
-            Console.WriteLine(string.Format("Total children added: {0}", total));
+            Console.WriteLine(string.Format("Total data added: {0}", total));
             Console.WriteLine(string.Format("Completed: {0}:{1}:{2}", mainWatch.Elapsed.Hours, mainWatch.Elapsed.Minutes, mainWatch.Elapsed.Seconds));
             Console.ReadLine();
         }
@@ -233,7 +279,7 @@ namespace IndexBuilder
                         }
                         catch (Exception ex)
                         {
-                            File.AppendAllText(Path.Combine(Environment.CurrentDirectory, "log.txt"), string.Format("Index: {0}; Error occured at line: {1}.\n", indexName, rowIndex));
+                            File.AppendAllText(Path.Combine(Environment.CurrentDirectory, "log.txt"), string.Format("Index: {0}; Error occured at line: {1}.\nError: {2}\n", indexName, rowIndex, ex.Message));
                         }
                     }
 
