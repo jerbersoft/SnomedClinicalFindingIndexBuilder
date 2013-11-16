@@ -310,5 +310,233 @@ namespace IndexBuilder.Properties {
                 this["HasDefinitionalManifestationIndexName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildDescriptions {
+            get {
+                return ((bool)(this["BuildDescriptions"]));
+            }
+            set {
+                this["BuildDescriptions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildRelationships {
+            get {
+                return ((bool)(this["BuildRelationships"]));
+            }
+            set {
+                this["BuildRelationships"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildClinicalFindings {
+            get {
+                return ((bool)(this["BuildClinicalFindings"]));
+            }
+            set {
+                this["BuildClinicalFindings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildFindingSites {
+            get {
+                return ((bool)(this["BuildFindingSites"]));
+            }
+            set {
+                this["BuildFindingSites"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildAssociatedMorphologies {
+            get {
+                return ((bool)(this["BuildAssociatedMorphologies"]));
+            }
+            set {
+                this["BuildAssociatedMorphologies"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildAssociatedWith {
+            get {
+                return ((bool)(this["BuildAssociatedWith"]));
+            }
+            set {
+                this["BuildAssociatedWith"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildCausativeAgents {
+            get {
+                return ((bool)(this["BuildCausativeAgents"]));
+            }
+            set {
+                this["BuildCausativeAgents"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildDueTos {
+            get {
+                return ((bool)(this["BuildDueTos"]));
+            }
+            set {
+                this["BuildDueTos"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildAfters {
+            get {
+                return ((bool)(this["BuildAfters"]));
+            }
+            set {
+                this["BuildAfters"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildSeverities {
+            get {
+                return ((bool)(this["BuildSeverities"]));
+            }
+            set {
+                this["BuildSeverities"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildClinicalCourses {
+            get {
+                return ((bool)(this["BuildClinicalCourses"]));
+            }
+            set {
+                this["BuildClinicalCourses"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildEpisodicities {
+            get {
+                return ((bool)(this["BuildEpisodicities"]));
+            }
+            set {
+                this["BuildEpisodicities"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildInterprets {
+            get {
+                return ((bool)(this["BuildInterprets"]));
+            }
+            set {
+                this["BuildInterprets"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildHasInterpretations {
+            get {
+                return ((bool)(this["BuildHasInterpretations"]));
+            }
+            set {
+                this["BuildHasInterpretations"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildPathologicalProcesses {
+            get {
+                return ((bool)(this["BuildPathologicalProcesses"]));
+            }
+            set {
+                this["BuildPathologicalProcesses"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildOccurences {
+            get {
+                return ((bool)(this["BuildOccurences"]));
+            }
+            set {
+                this["BuildOccurences"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildFindingMethods {
+            get {
+                return ((bool)(this["BuildFindingMethods"]));
+            }
+            set {
+                this["BuildFindingMethods"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildFindingInformers {
+            get {
+                return ((bool)(this["BuildFindingInformers"]));
+            }
+            set {
+                this["BuildFindingInformers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BuildHasDefinitionalManifestations {
+            get {
+                return ((bool)(this["BuildHasDefinitionalManifestations"]));
+            }
+            set {
+                this["BuildHasDefinitionalManifestations"] = value;
+            }
+        }
     }
 }

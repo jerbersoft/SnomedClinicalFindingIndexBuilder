@@ -73,17 +73,17 @@ namespace IndexBuilder
             return childrenIds;
         }
 
-        public static string GetDescription(string descriptionUrl, string conceptId)
+        public static string[] GetDescriptions(string descriptionUrl, string conceptId)
         {
             descriptionUrl = descriptionUrl + "/_search";
-            var description = string.Empty;
+            var descriptions = new List<string>();
 
             // get description
             var descriptionRequest = (HttpWebRequest)WebRequest.Create(descriptionUrl);
             descriptionRequest.Method = "POST";
             descriptionRequest.ContentType = "application/x-www-form-urlencoded";
             descriptionRequest.Accept = "application/json";
-            var descriptionQuery = "{\"query\": { \"bool\": { \"must\": [ { \"query_string\": { \"default_field\": \"conceptId\", \"query\": \"" + conceptId + "\" }}, { \"match\": { \"active\": 1 }}, {\"match\": { \"typeId\": \"900000000000003001\" }} ]}} }";
+            var descriptionQuery = "{\"query\": { \"bool\": { \"must\": [ { \"query_string\": { \"default_field\": \"conceptId\", \"query\": \"" + conceptId + "\" }}, { \"match\": { \"active\": 1 }} ]}} }";
             var descriptionQueryData = Encoding.UTF8.GetBytes(descriptionQuery);
             descriptionRequest.ContentLength = descriptionQueryData.Length;
             using (var stream = descriptionRequest.GetRequestStream())
@@ -100,7 +100,12 @@ namespace IndexBuilder
                         var descriptionResultJson = descriptionReader.ReadToEnd();
                         var descriptionResult = JsonConvert.DeserializeObject<Result>(descriptionResultJson);
                         if (descriptionResult != null && descriptionResult.hits.hits.Count > 0)
-                            description = descriptionResult.hits.hits[0]._source.term;
+                        {
+                            foreach(var description in descriptionResult.hits.hits)
+                            {
+                                descriptions.Add(description._source.term);
+                            }
+                        }
                     }
                 }
 
@@ -111,7 +116,7 @@ namespace IndexBuilder
                 Console.WriteLine(ex.Message);
             }
 
-            return description;
+            return descriptions.ToArray();
         }
 
         public static bool Exists(string url, string conceptId)
