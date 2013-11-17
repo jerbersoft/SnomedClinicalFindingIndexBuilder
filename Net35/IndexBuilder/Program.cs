@@ -74,59 +74,114 @@ namespace IndexBuilder
             string descriptionsIndexUrl = baseUrl + "/" + descriptionIndexName + "/" + entity;
             string relationshipsIndexUrl = baseUrl + "/" + relationshipIndexName + "/" + entity;
 
-            // build attribute indices
-            // for the << specs
-            Console.WriteLine("Process of data for spec with (<<)");
+            
             if (buildClinicalFindings)
+            {
+                CreateIndex(clinicalFindingsIndexName, entity, baseUrl);
                 BuildIndexFromIndex(clinicalFindingsIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            }
 
             if (buildFindingSites)
+            {
+                CreateIndex(findingSiteIndexName, entity, baseUrl);
                 BuildIndexFromIndex(findingSiteIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "442083009" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            }
 
             if (buildAssociatedMorphologies)
+            {
+                CreateIndex(associatedMorphologyIndexName, entity, baseUrl);
                 BuildIndexFromIndex(associatedMorphologyIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "442083009" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            }
 
             if (buildAssociatedWith)
+            {
+                CreateIndex(associatedWithIndexName, entity, baseUrl);
                 BuildIndexFromIndex(associatedWithIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003", "71388002", "272379006", "410607006", "105590001", "260787004", "78621006" }, AllowableValuesEnum.ThisCodeAndDescendants);
+                BuildIndexFromIndex(associatedWithIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "138875005" }, AllowableValuesEnum.ThisCodeOnly);
+                BuildIndexFromIndex(associatedWithIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "373873005" }, AllowableValuesEnum.DescendantsOnlyAndOnlyAllowedInQualifyingRelationship);
+            }
 
             if (buildCausativeAgents)
+            {
+                CreateIndex(causativeAgentIndexName, entity, baseUrl);
                 BuildIndexFromIndex(causativeAgentIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "410607006", "105590001", "260787004", "78621006" }, AllowableValuesEnum.ThisCodeAndDescendants);
+                BuildIndexFromIndex(causativeAgentIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "138875005" }, AllowableValuesEnum.ThisCodeOnly);
+                BuildIndexFromIndex(causativeAgentIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "373873005" }, AllowableValuesEnum.DescendantsOnlyAndOnlyAllowedInQualifyingRelationship);
+            }
 
             if (buildDueTos)
-                BuildIndexFromIndex(dueToIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            {
+                CreateIndex(dueToIndexName, entity, baseUrl);
+                BuildIndexFromIndex(dueToIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003", "272379006" }, AllowableValuesEnum.DescendantsOnlyExceptForSupercategoryGroupers);
+            }
 
             if (buildAfters)
+            {
+                CreateIndex(afterIndexName, entity, baseUrl);
                 BuildIndexFromIndex(afterIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003", "71388002" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            }
+
+            if (buildSeverities)
+            {
+                CreateIndex(severityIndexName, entity, baseUrl);
+                BuildIndexFromIndex(severityIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "272141005" }, AllowableValuesEnum.DescendantsOnlyExceptForSupercategoryGroupers);
+            }
+
+            if (buildClinicalCourses)
+            {
+                CreateIndex(clinicalCourseIndexName, entity, baseUrl);
+                BuildIndexFromIndex(clinicalCourseIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "288524001" }, AllowableValuesEnum.DescendantsOnlyExceptForSupercategoryGroupers);
+            }
+
+            if (buildEpisodities)
+            {
+                CreateIndex(episodicityIndexName, entity, baseUrl);
+                BuildIndexFromIndex(episodicityIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "288526004" }, AllowableValuesEnum.DescendantsOnlyExceptForSupercategoryGroupers);
+            }
 
             if (buildInterprets)
+            {
+                CreateIndex(interpretsIndexName, entity, baseUrl);
                 BuildIndexFromIndex(interpretsIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "363787002", "108252007", "386053000" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            }
 
             if (buildHasInterpretations)
+            {
+                CreateIndex(hasInterpretationIndexName, entity, baseUrl);
                 BuildIndexFromIndex(hasInterpretationIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "260245000" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            }
 
             if (buildPathologicalProcesses)
+            {
+                CreateIndex(pathologicalProcessIndexName, entity, baseUrl);
                 BuildIndexFromIndex(pathologicalProcessIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "441862004" }, AllowableValuesEnum.ThisCodeAndDescendants);
+                BuildIndexFromIndex(pathologicalProcessIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "263680009" }, AllowableValuesEnum.ThisCodeOnly);
+            }
 
             if (buildHasDefinitionalManifestations)
+            {
+                CreateIndex(hasDefinitionalManifestationIndexName, entity, baseUrl);
                 BuildIndexFromIndex(hasDefinitionalManifestationIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "404684003" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            }
 
             if (buildOccurences)
-                BuildIndexFromIndex(occurenceIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "282032007" }, AllowableValuesEnum.ThisCodeAndDescendants);
+            {
+                CreateIndex(occurenceIndexName, entity, baseUrl);
+                BuildIndexFromIndex(occurenceIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "282032007" }, AllowableValuesEnum.DescendantsOnly);
+            }
 
             if (buildFindingMethods)
+            {
+                CreateIndex(findingMethodIndexName, entity, baseUrl);
+                BuildIndexFromIndex(findingInformerIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "71388002" }, AllowableValuesEnum.DescendantsOnlyExceptForSupercategoryGroupers);
+            }
+
+            if (buildFindingInformers)
+            {
+                CreateIndex(findingInformerIndexName, entity, baseUrl);
                 BuildIndexFromIndex(findingInformerIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "420158005", "419358007" }, AllowableValuesEnum.ThisCodeAndDescendants);
-
-            // this code only ==
-            Console.WriteLine("Process of data for spec with (==)");
-            if (buildAssociatedWith)
-                BuildIndexFromIndex(associatedWithIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "138875005" }, AllowableValuesEnum.ThisCodeOnly);
-
-            if (buildCausativeAgents)
-                BuildIndexFromIndex(causativeAgentIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "138875005" }, AllowableValuesEnum.ThisCodeOnly);
-
-            if (buildPathologicalProcesses)
-                BuildIndexFromIndex(pathologicalProcessIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "263680009" }, AllowableValuesEnum.ThisCodeOnly);
-
+            }
+            
             mainWatch.Stop();
             Console.WriteLine("Index builder process completed successfully.");
             Console.WriteLine(string.Format("Total time elapsed: {0}:{1}:{2}", mainWatch.Elapsed.Hours, mainWatch.Elapsed.Minutes, mainWatch.Elapsed.Seconds));
@@ -176,6 +231,20 @@ namespace IndexBuilder
             Stopwatch indexWatch = new Stopwatch();
             indexWatch.Start();
 
+            // add data
+            Console.WriteLine(string.Format("Will now add data to index \"{0}\"", indexName));
+            foreach (var conceptId in conceptIds)
+            {
+                AddIndexDataFromIndex(baseUrl, indexName, entity, descriptionIndexUrl, relationshipsIndexUrl, conceptId, allowedValues);
+            }
+
+            indexWatch.Stop();
+            Console.WriteLine(string.Format("Finished building index \"{0}\"", indexName));
+            Console.WriteLine(string.Format("Index build time: {0}:{1}:{2}", indexWatch.Elapsed.Hours, indexWatch.Elapsed.Minutes, indexWatch.Elapsed.Seconds));
+        }
+
+        public static void CreateIndex(string indexName, string entity, string baseUrl)
+        {
             Console.WriteLine(string.Format("Building of \"index {0}\" started", indexName));
 
             // delete index
@@ -194,17 +263,6 @@ namespace IndexBuilder
             string[] headerNames = new string[] { "conceptId", "term" };
             ElasticSearchUtility.CreateIndex(indexName, entity, baseUrl, headerNames);
             Console.WriteLine(string.Format("Created index \"{0}\".", indexName));
-
-            // add data
-            Console.WriteLine(string.Format("Will now add data to index \"{0}\"", indexName));
-            foreach (var conceptId in conceptIds)
-            {
-                AddIndexDataFromIndex(baseUrl, indexName, entity, descriptionIndexUrl, relationshipsIndexUrl, conceptId, allowedValues);
-            }
-
-            indexWatch.Stop();
-            Console.WriteLine(string.Format("Finished building index \"{0}\"", indexName));
-            Console.WriteLine(string.Format("Index build time: {0}:{1}:{2}", indexWatch.Elapsed.Hours, indexWatch.Elapsed.Minutes, indexWatch.Elapsed.Seconds));
         }
 
         public static void AddIndexDataFromIndex(string baseUrl, string indexName, string entity, string descriptionsIndexUrl, string relationshipsIndexUrl, string conceptId, AllowableValuesEnum allowedValues)
