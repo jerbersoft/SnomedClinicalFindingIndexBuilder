@@ -94,6 +94,21 @@ namespace IndexBuilder.Properties {
                 this["Entity"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("c:\\data\\concepts.txt")]
+        public string ConceptsFilePath
+        {
+            get
+            {
+                return ((string)(this["ConceptsFilePath"]));
+            }
+            set
+            {
+                this["ConceptsFilePath"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -337,7 +352,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildClinicalFindings {
             get {
                 return ((bool)(this["BuildClinicalFindings"]));
@@ -349,7 +364,31 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("concepts")]
+        public string ConceptIndexName {
+            get {
+                return ((string)(this["ConceptIndexName"]));
+            }
+            set {
+                this["ConceptIndexName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool BuildConcepts {
+            get {
+                return ((bool)(this["BuildConcepts"]));
+            }
+            set {
+                this["BuildConcepts"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildFindingSites {
             get {
                 return ((bool)(this["BuildFindingSites"]));
@@ -361,7 +400,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildAssociatedMorphologies {
             get {
                 return ((bool)(this["BuildAssociatedMorphologies"]));
@@ -373,7 +412,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildAssociatedWith {
             get {
                 return ((bool)(this["BuildAssociatedWith"]));
@@ -385,7 +424,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildCausativeAgents {
             get {
                 return ((bool)(this["BuildCausativeAgents"]));
@@ -397,7 +436,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildDueTos {
             get {
                 return ((bool)(this["BuildDueTos"]));
@@ -409,7 +448,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildAfters {
             get {
                 return ((bool)(this["BuildAfters"]));
@@ -421,7 +460,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildSeverities {
             get {
                 return ((bool)(this["BuildSeverities"]));
@@ -433,7 +472,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildClinicalCourses {
             get {
                 return ((bool)(this["BuildClinicalCourses"]));
@@ -445,7 +484,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildEpisodicities {
             get {
                 return ((bool)(this["BuildEpisodicities"]));
@@ -457,7 +496,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildInterprets {
             get {
                 return ((bool)(this["BuildInterprets"]));
@@ -469,7 +508,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildHasInterpretations {
             get {
                 return ((bool)(this["BuildHasInterpretations"]));
@@ -481,7 +520,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildPathologicalProcesses {
             get {
                 return ((bool)(this["BuildPathologicalProcesses"]));
@@ -493,7 +532,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildOccurences {
             get {
                 return ((bool)(this["BuildOccurences"]));
@@ -505,7 +544,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildFindingMethods {
             get {
                 return ((bool)(this["BuildFindingMethods"]));
@@ -517,7 +556,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildFindingInformers {
             get {
                 return ((bool)(this["BuildFindingInformers"]));
@@ -529,7 +568,7 @@ namespace IndexBuilder.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BuildHasDefinitionalManifestations {
             get {
                 return ((bool)(this["BuildHasDefinitionalManifestations"]));

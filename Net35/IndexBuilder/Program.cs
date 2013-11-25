@@ -16,6 +16,7 @@ namespace IndexBuilder
         static void Main(string[] args)
         {
             string baseUrl = Settings.Default.BaseIndexUrl;
+            string conceptIndexName = Settings.Default.ConceptIndexName;
             string descriptionIndexName = Settings.Default.DescriptionIndexName;
             string relationshipIndexName = Settings.Default.RelationshipIndexName;
             string clinicalFindingsIndexName = Settings.Default.ClinicalFindingIndexName;
@@ -37,6 +38,7 @@ namespace IndexBuilder
             string findingInformerIndexName = Settings.Default.FindingInformerIndexName;
             string entity = Settings.Default.Entity;
             int delimiterCode = Settings.Default.DelimiterCode;
+            bool buildConcepts = Settings.Default.BuildConcepts;
             bool buildDescriptions = Settings.Default.BuildDescriptions;
             bool buildRelationships = Settings.Default.BuildRelationships;
             bool buildClinicalFindings = Settings.Default.BuildClinicalFindings;
@@ -57,11 +59,16 @@ namespace IndexBuilder
             bool buildFindingMethods = Settings.Default.BuildFindingMethods;
             bool buildFindingInformers = Settings.Default.BuildFindingInformers;
 
+            string conceptsFilePath = Settings.Default.ConceptsFilePath;
             string descriptionsFilePath = Settings.Default.DescriptionsFilePath;
             string relationshipsFilePath = Settings.Default.RelationshipsFilePath;
 
             Stopwatch mainWatch = new Stopwatch();
             mainWatch.Start();
+
+            // create the concept index
+            if (buildConcepts)
+                BuildIndexFromFile(conceptIndexName, entity, baseUrl, conceptsFilePath, delimiterCode);
 
             // create the descriptions index
             if (buildDescriptions)
@@ -71,10 +78,11 @@ namespace IndexBuilder
             if (buildRelationships)
                 BuildIndexFromFile(relationshipIndexName, entity, baseUrl, relationshipsFilePath, delimiterCode);
 
+            string conceptsIndexUrl = baseUrl + "/" + conceptIndexName + "/" + entity;
             string descriptionsIndexUrl = baseUrl + "/" + descriptionIndexName + "/" + entity;
             string relationshipsIndexUrl = baseUrl + "/" + relationshipIndexName + "/" + entity;
 
-            
+
             if (buildClinicalFindings)
             {
                 CreateIndex(clinicalFindingsIndexName, entity, baseUrl);
@@ -181,7 +189,7 @@ namespace IndexBuilder
                 CreateIndex(findingInformerIndexName, entity, baseUrl);
                 BuildIndexFromIndex(findingInformerIndexName, entity, baseUrl, descriptionsIndexUrl, relationshipsIndexUrl, new string[] { "420158005", "419358007" }, AllowableValuesEnum.ThisCodeAndDescendants);
             }
-            
+
             mainWatch.Stop();
             Console.WriteLine("Index builder process completed successfully.");
             Console.WriteLine(string.Format("Total time elapsed: {0}:{1}:{2}", mainWatch.Elapsed.Hours, mainWatch.Elapsed.Minutes, mainWatch.Elapsed.Seconds));
@@ -345,12 +353,27 @@ namespace IndexBuilder
             {
                 var line = string.Empty;
                 int rowIndex = 1;
+                int activeColumnIndex = -1;
+
+                // get active column\
+                for (var i = 0; i < headerNames.Length; i++)
+                {
+                    if (headerNames[i].ToUpperInvariant().Contains("ACTIVE"))
+                    {
+                        activeColumnIndex = i;
+                        break;
+                    }
+                }
 
                 while ((line = reader.ReadLine()) != null)
                 {
                     if (rowIndex > 1)
                     {
                         string[] rowValues = line.Split(delimiter);
+
+                        // if current row is not active, skip it
+                        if (rowValues[activeColumnIndex] != "1")
+                            continue;
 
                         StringBuilder row = new StringBuilder();
 
@@ -360,6 +383,7 @@ namespace IndexBuilder
                         {
                             //int columnIndex = headers.IndexOf(columns[i]);
                             row.Append("\"" + headerNames[i] + "\": \"" + rowValues[i] + "\"");
+
                             if (i < headerNames.Length - 1)
                             {
                                 row.Append(",");
