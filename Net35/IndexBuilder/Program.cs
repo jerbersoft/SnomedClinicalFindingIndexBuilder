@@ -8,6 +8,8 @@ using System.Text;
 using System.Linq;
 
 using AllowableValuesEnum = IndexBuilder.ElasticSearchUtility.AllowableValuesEnum;
+using Newtonsoft.Json;
+using IndexBuilder.Dtos;
 
 namespace IndexBuilder
 {
@@ -66,22 +68,22 @@ namespace IndexBuilder
             Stopwatch mainWatch = new Stopwatch();
             mainWatch.Start();
 
-            // create the concept index
-            if (buildConcepts)
-                BuildIndexFromFile(conceptIndexName, entity, baseUrl, conceptsFilePath, delimiterCode);
-
-            // create the descriptions index
-            if (buildDescriptions)
-                BuildIndexFromFile(descriptionIndexName, entity, baseUrl, descriptionsFilePath, delimiterCode);
-
-            // build the relationships index
-            if (buildRelationships)
-                BuildIndexFromFile(relationshipIndexName, entity, baseUrl, relationshipsFilePath, delimiterCode);
-
+            string conceptsIndexSearchUrl = baseUrl + "/" + conceptIndexName + "/" + entity + "/_search";
             string conceptsIndexUrl = baseUrl + "/" + conceptIndexName + "/" + entity;
             string descriptionsIndexUrl = baseUrl + "/" + descriptionIndexName + "/" + entity;
             string relationshipsIndexUrl = baseUrl + "/" + relationshipIndexName + "/" + entity;
 
+            // create the concept index
+            if (buildConcepts)
+                BuildIndexFromFile(conceptIndexName, entity, baseUrl, conceptsFilePath, delimiterCode, null, new string[] {});
+
+            // create the descriptions index
+            if (buildDescriptions)
+                BuildIndexFromFile(descriptionIndexName, entity, baseUrl, descriptionsFilePath, delimiterCode, conceptsIndexSearchUrl, new string[] { "conceptId" });
+
+            // build the relationships index
+            if (buildRelationships)
+                BuildIndexFromFile(relationshipIndexName, entity, baseUrl, relationshipsFilePath, delimiterCode, conceptsIndexSearchUrl, new string[] { "sourceId", "destinationId" });
 
             if (buildClinicalFindings)
             {
@@ -196,7 +198,7 @@ namespace IndexBuilder
             Console.ReadLine();
         }
 
-        private static void BuildIndexFromFile(string indexName, string entity, string baseUrl, string filePath, int delimiterCode)
+        private static void BuildIndexFromFile(string indexName, string entity, string baseUrl, string filePath, int delimiterCode, string conceptsIndexUrl, string[] conceptIdColumnNames)
         {
             Stopwatch indexWatch = new Stopwatch();
             indexWatch.Start();
@@ -227,7 +229,7 @@ namespace IndexBuilder
 
             // add data
             Console.WriteLine(string.Format("Will now add data to index \"{0}\"", indexName));
-            AddIndexDataFromFile(filePath, headerNames, baseUrl, indexName, entity, (char)delimiterCode);
+            AddIndexDataFromFile(filePath, headerNames, baseUrl, indexName, entity, (char)delimiterCode, conceptsIndexUrl, conceptIdColumnNames);
 
             indexWatch.Stop();
             Console.WriteLine(string.Format("Finished building index \"{0}\"", indexName));
@@ -345,7 +347,7 @@ namespace IndexBuilder
             //Console.ReadLine();
         }
 
-        public static void AddIndexDataFromFile(string filePath, string[] headerNames, string baseUrl, string indexName, string entity, char delimiter)
+        public static void AddIndexDataFromFile(string filePath, string[] headerNames, string baseUrl, string indexName, string entity, char delimiter, string conceptsIndexUrl, string[] conceptIdColumnNames)
         {
             string indexUrl = baseUrl + "/" + indexName + "/" + entity;
 
@@ -374,6 +376,68 @@ namespace IndexBuilder
                         // if current row is not active, skip it
                         if (rowValues[activeColumnIndex] != "1")
                             continue;
+
+                        List<string> conceptIds = new List<string>();
+                        foreach (var conceptColumn in conceptIdColumnNames)
+                        {
+                            for (int i = 0; i < headerNames.Length; i++)
+                            {
+                                if (headerNames[i] == conceptColumn)
+                                {
+                                    conceptIds.Add(rowValues[i]);
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(conceptsIndexUrl))
+                        {
+                            bool isActiveConcept = true;
+
+                            foreach (var conceptId in conceptIds)
+                            {
+                                var conceptRequest = (HttpWebRequest)WebRequest.Create(conceptsIndexUrl);
+                                conceptRequest.Method = "POST";
+                                string conceptDataString = "{ \"query\" : {\"match\" : { \"id\" : \"" + conceptId + "\" }}}";
+                                byte[] conceptData = Encoding.UTF8.GetBytes(conceptDataString);
+                                conceptRequest.ContentType = "application/x-www-form-urlencoded";
+                                conceptRequest.Accept = "application/json";
+                                conceptRequest.ContentLength = conceptData.Length;
+
+                                using (var stream = conceptRequest.GetRequestStream())
+                                {
+                                    stream.Write(conceptData, 0, conceptData.Length);
+                                }
+
+                                try
+                                {
+                                    using (var response = conceptRequest.GetResponse())
+                                    {
+                                        using (var responseStream = new StreamReader(response.GetResponseStream()))
+                                        {
+                                            var responseString = responseStream.ReadToEnd();
+                                            var result = JsonConvert.DeserializeObject<Result>(responseString);
+                                            if (result.hits.hits.Count == 0)
+                                            {
+                                                isActiveConcept = false;
+                                                break;
+                                            }
+                                        }
+
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    File.AppendAllText(Path.Combine(Environment.CurrentDirectory, "log.txt"), string.Format("Index: {0}; Error occured at line: {1}.\nError: {2}\n", indexName, rowIndex, ex.Message));
+                                }
+                            }
+
+                            if (!isActiveConcept)
+                            {
+                                Console.WriteLine("Skipped current row due to tied concept is not active.");
+                                continue;
+                            }
+                        }
 
                         StringBuilder row = new StringBuilder();
 
