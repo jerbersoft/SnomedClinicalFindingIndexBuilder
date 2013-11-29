@@ -270,7 +270,7 @@ namespace IndexBuilder
             }
 
             // create index
-            string[] headerNames = new string[] { "conceptId", "term" };
+            string[] headerNames = new string[] { "conceptId", "term", "typeId" };
             ElasticSearchUtility.CreateIndex(indexName, entity, baseUrl, headerNames);
             Console.WriteLine(string.Format("Created index \"{0}\".", indexName));
         }
@@ -295,7 +295,7 @@ namespace IndexBuilder
                 var descriptions = ElasticSearchUtility.GetDescriptions(descriptionsIndexUrl, conceptId);
                 foreach (var description in descriptions)
                 {
-                    ElasticSearchUtility.WriteToIndex(indexUrl, conceptId, description, total);
+                    ElasticSearchUtility.WriteToIndex(indexUrl, conceptId, description.Term, total, description.TypeId);
                     total++;
                 }
             }
@@ -317,7 +317,7 @@ namespace IndexBuilder
                         var descriptions = ElasticSearchUtility.GetDescriptions(descriptionsIndexUrl, child);
                         foreach (var description in descriptions)
                         {
-                            ElasticSearchUtility.WriteToIndex(indexUrl, child, description, total);
+                            ElasticSearchUtility.WriteToIndex(indexUrl, child, description.Term, total, description.TypeId);
                             total++;
                             count++;
                         }

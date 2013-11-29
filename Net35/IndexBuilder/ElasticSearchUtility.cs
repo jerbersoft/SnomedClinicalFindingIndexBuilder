@@ -73,11 +73,11 @@ namespace IndexBuilder
             return childrenIds;
         }
 
-        public static string[] GetDescriptions(string descriptionUrl, string conceptId)
+        public static Description[] GetDescriptions(string descriptionUrl, string conceptId)
         {
+            var descriptions = new List<Description>();
             descriptionUrl = descriptionUrl + "/_search";
-            var descriptions = new List<string>();
-
+            
             // get description
             var descriptionRequest = (HttpWebRequest)WebRequest.Create(descriptionUrl);
             descriptionRequest.Method = "POST";
@@ -103,7 +103,7 @@ namespace IndexBuilder
                         {
                             foreach(var description in descriptionResult.hits.hits)
                             {
-                                descriptions.Add(description._source.term);
+                                descriptions.Add(new Description() { Term = description._source.term, ConceptId = description._source.conceptId, TypeId = description._source.typeId });
                             }
                         }
                     }
@@ -159,14 +159,14 @@ namespace IndexBuilder
             return exists;
         }
 
-        public static void WriteToIndex(string indexUrl, string conceptId, string term, int id)
+        public static void WriteToIndex(string indexUrl, string conceptId, string term, int id, string typeId)
         {
             HttpWebRequest putRequest = (HttpWebRequest)WebRequest.Create(indexUrl + "/" + id.ToString());
             putRequest.Method = "PUT";
             putRequest.ContentType = "application/x-www-form-urlencoded";
             putRequest.Accept = "application/json";
 
-            string putString = "{ \"conceptId\":\"" + conceptId + "\",\"term\":\"" + term + "\" }";
+            string putString = "{ \"conceptId\":\"" + conceptId + "\",\"term\":\"" + term + "\",\"typeId\":\"" + typeId + "\" }";
 
             byte[] putData = Encoding.UTF8.GetBytes(putString);
             putRequest.ContentLength = putData.Length;
